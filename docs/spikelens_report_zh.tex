@@ -1,0 +1,850 @@
+% SpikeLens BDVA Project Report - Chinese Version
+% 中文版报告源文件
+%
+% 编译建议：
+%   1. 优先使用 pdflatex：
+%        pdflatex spikelens_report_zh.tex
+%        pdflatex spikelens_report_zh.tex
+%   2. 如果本机 pdflatex 的中文字体配置不完整，可改用 xelatex：
+%        xelatex spikelens_report_zh.tex
+%        xelatex spikelens_report_zh.tex
+%
+% 说明：本文档使用 ctexart 文档类。ctex 会处理中文断行、字体与章节标题格式，
+% 能显著减少中文 LaTeX 文档在 pdflatex 下的编码和字体错误。
+%
+% 需要从项目根目录编译，使以下图片路径可以被正确找到：
+%   docs/images/abs.png
+%   docs/images/mnist-image.png
+%   docs/images/lat-enc.png
+%   docs/images/network-trace.png
+%   docs/images/layer-spike-time.png
+%   docs/images/lat-enc-panel.png
+%   docs/images/params.png
+
+\documentclass[UTF8,11pt,a4paper]{ctexart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{makecell}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!55!black,
+    citecolor=blue!55!black,
+    urlcolor=blue!55!black,
+    pdftitle={SpikeLens：脉冲神经网络推理过程的交互式可视化},
+    pdfauthor={Ganbold Munkhtur},
+    pdfsubject={Big Data Visualization and Visual Analysis Final Project},
+    pdfkeywords={脉冲神经网络, 可视化, snnTorch, MNIST, 延迟编码, Svelte, Vite, GitHub Pages}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{SpikeLens 大数据可视化项目报告}
+\rhead{\thepage}
+\setlength{\headheight}{14pt}
+
+\definecolor{codebg}{RGB}{245,247,250}
+\definecolor{codeframe}{RGB}{210,215,222}
+\definecolor{darkblue}{RGB}{20,48,86}
+\definecolor{softgray}{RGB}{85,90,100}
+
+\lstdefinestyle{reportcode}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{codeframe},
+    showstringspaces=false,
+    tabsize=2,
+    columns=fullflexible
+}
+\lstset{style=reportcode}
+
+\titleformat{\section}
+  {\Large\bfseries\color{darkblue}}
+  {\thesection}{0.8em}{}
+\titleformat{\subsection}
+  {\large\bfseries\color{darkblue}}
+  {\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{darkblue}}
+  {\thesubsubsection}{0.8em}{}
+
+\setlist[itemize]{leftmargin=1.4em,itemsep=0.25em,topsep=0.35em}
+\setlist[enumerate]{leftmargin=1.6em,itemsep=0.25em,topsep=0.35em}
+
+\newcommand{\projecttitle}{SpikeLens}
+\newcommand{\repoURL}{\url{https://github.com/c1truus/spikelens_bdva}}
+\newcommand{\siteURL}{\url{https://c1truus.github.io/spikelens_bdva/}}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1.5cm}
+    {\Huge\bfseries SpikeLens\par}
+    \vspace{0.4cm}
+    {\Large 脉冲神经网络推理过程的交互式可视化\par}
+    \vspace{0.8cm}
+    {\large Big Data Visualization and Visual Analysis Final Project\par}
+    \vspace{1.2cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.86\textwidth]{docs/images/abs.png}
+        \caption*{项目总览与可视化界面截图。}
+    \end{figure}
+    \vfill
+    \begin{tabular}{rl}
+        项目网页： & \siteURL \\
+        代码仓库： & \repoURL \\
+        作者： & 蒙和特尔 学号 : 1820221121 \\
+        报告类型： & README 风格技术项目报告 \\
+    \end{tabular}
+    \vspace*{1cm}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{项目概述}
+
+\subsection{摘要}
+
+\projecttitle{} 是一个用于展示脉冲神经网络推理过程的交互式静态网页应用。项目以 MNIST 手写数字识别为任务，将静态的灰度数字图像通过延迟编码转换为输入脉冲序列，然后记录脉冲神经网络在多个时间步内的输入层脉冲、隐藏层脉冲、膜电位以及输出类别脉冲计数，并将这些记录可视化为可播放、可拖动、可比较的时间序列界面。
+
+本项目的目标不是单纯展示一个分类准确率，而是打开神经网络推理过程本身：让观察者看到一个静态数字如何被编码成脉冲序列，脉冲如何在隐藏层中传播，不同类别输出神经元如何逐步积累证据，以及不同超参数如何影响网络内部的可视化动态。
+
+最终系统采用静态网站形式部署。浏览器端不运行 PyTorch 或 snnTorch 模型，而是加载离线预先导出的 JSON 推理轨迹数据。这种设计降低了部署复杂度，使项目可以直接通过 GitHub Pages 访问，并保持较好的可复现性与可展示性。
+
+\subsection{核心可视化问题}
+
+本项目围绕以下核心问题展开：
+
+\begin{quote}
+脉冲神经网络如何从延迟编码的手写数字中逐步积累时间证据，并且膜衰减系数、输入延迟阈值和推理时间步数等超参数如何改变脉冲传播与膜电位变化的可视化形态？
+\end{quote}
+
+这个问题区别于普通分类任务中的“预测是否正确”。本项目更关注导致分类结果的内部时序过程。
+
+\subsection{最终成果}
+
+项目最终包含以下成果：
+
+\begin{itemize}
+    \item 一组经过训练的脉冲神经网络模型变体；
+    \item 由模型推理过程导出的脉冲与膜电位轨迹数据；
+    \item 基于 \texttt{manifest.json} 的静态数据索引结构；
+    \item 使用 Svelte 与 Vite 构建的交互式网页应用；
+    \item 包含输入脉冲、隐藏层状态、膜电位强度、输出脉冲累积、时间步播放、延迟编码解释和超参数解释的可视化界面。
+\end{itemize}
+
+\section{项目动机与想法形成}
+
+\subsection{初始方向}
+
+本项目的想法来源于脉冲神经网络硬件加速相关实践。在该方向中，模型推理不再只是一次矩阵运算，而是涉及时间步、脉冲事件、膜电位累积、延迟编码以及层间事件传播。相比普通神经网络，脉冲神经网络天然具有时间结构，因此更适合作为一个可视分析对象。
+
+普通人工神经网络通常可以被理解为：
+
+\begin{lstlisting}
+input image -> output class
+\end{lstlisting}
+
+而脉冲神经网络更接近：
+
+\begin{lstlisting}
+input image -> spike sequence -> layer activity over time -> output spike counts
+\end{lstlisting}
+
+这种从静态输入到时序事件的转换，构成了本项目最核心的可视化机会。
+
+\subsection{为什么需要可视化 SNN 推理}
+
+脉冲神经网络的内部状态不仅由最终输出决定，还由离散脉冲事件和膜电位变化共同构成。一个神经元可能在多个时间步内保持静默，同时不断积累膜电位；当膜电位超过阈值时，它才会发放一个二值脉冲。
+
+因此，推理过程中存在多层信息：
+
+\begin{itemize}
+    \item 哪些输入像素较早发放脉冲？
+    \item 隐藏层中哪些神经元被激活？
+    \item 网络活动在时间上是否稀疏？
+    \item 哪个输出类别神经元积累了最多脉冲？
+    \item 超参数变化如何影响可见的传播模式？
+\end{itemize}
+
+这些问题很难仅通过准确率或混淆矩阵回答。\projecttitle{} 的作用是把一次 SNN 推理过程转化为可观察、可交互、可解释的视觉对象。
+
+\subsection{为什么采用静态 Web 应用}
+
+实时后端可以支持在线推理，但会显著增加部署成本。对于课程期末项目，更重要的是让教师可以直接打开网页、稳定访问并体验交互。因此，本项目采用如下结构：
+
+\begin{lstlisting}
+offline training and trace export
+        -> JSON trace dataset
+        -> static Svelte/Vite web app
+        -> GitHub Pages deployment
+\end{lstlisting}
+
+浏览器端只加载预先计算好的数据，不依赖本地 Python、PyTorch、CUDA 或 snnTorch 环境。这样可以保证展示过程更稳定，也更适合提交与评分。
+
+\subsection{设计约束}
+
+项目实现过程中主要考虑以下约束：
+
+\begin{itemize}
+    \item 网站应能在无后端环境下运行；
+    \item 数据大小必须适合 GitHub Pages 部署；
+    \item 可视化必须在数百到数千个神经元规模下仍然可读；
+    \item 交互方式必须对第一次接触 SNN 的读者足够清晰；
+    \item 项目不应只展示图像，还应解释 SNN 的基本概念。
+\end{itemize}
+
+\section{背景知识}
+
+\subsection{MNIST 数据集}
+
+MNIST 是手写数字分类任务中最经典的数据集之一。每个样本是一张 $28\times 28$ 的灰度图像，对应 0 到 9 中的一个数字类别。该数据集的标准版本包含训练集和测试集，常用于机器学习与神经网络模型的教学、验证和可视化实验。
+
+本项目选择 MNIST 的原因有两点。第一，手写数字具有直观含义，读者可以直接比较原始图像、真实标签与预测标签。第二，$28\times 28$ 的输入尺寸可以自然映射成二维网格，适合展示输入层脉冲活动。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.72\textwidth]{docs/images/mnist-image.png}
+    \caption{MNIST 输入图像示例。每个像素可以被视为一个输入神经元。}
+\end{figure}
+
+\subsection{脉冲神经网络}
+
+脉冲神经网络使用离散脉冲事件表示信息。与普通人工神经网络中连续的激活值不同，SNN 中的神经元在特定时间步发放二值脉冲。也就是说，模型的计算结果不仅与“值”有关，也与“时间”有关。
+
+可以简化理解为：
+
+\begin{lstlisting}
+ordinary neural network: continuous activation values
+spiking neural network:  binary events over discrete time
+\end{lstlisting}
+
+这种时间维度使 SNN 的推理过程更适合被做成动画或交互式时间序列可视化。
+
+\subsection{泄漏积分发放神经元}
+
+本项目使用 snnTorch 中的 Leaky Integrate-and-Fire 行为。LIF 神经元维护一个膜电位状态。输入电流会提高膜电位，膜电位会随着时间按比例衰减。当膜电位超过发放阈值时，神经元输出一个脉冲。
+
+其直观过程为：
+
+\begin{lstlisting}
+input current arrives
+        -> membrane potential accumulates
+        -> old potential decays by beta
+        -> threshold crossing emits a spike
+\end{lstlisting}
+
+在可视化中，膜电位被显示为亮度强度。膜电位越高，颜色越亮；膜电位越低，颜色越暗。
+
+\subsection{延迟编码}
+
+MNIST 图像本身是静态的，而 SNN 的输入是时间序列。为了解决这个问题，本项目使用延迟编码将像素亮度映射为脉冲时间。
+
+延迟编码的直观含义是：
+
+\begin{itemize}
+    \item 较亮的像素更早发放脉冲；
+    \item 较暗的像素更晚发放脉冲；
+    \item 低于阈值的弱像素可以不发放脉冲；
+    \item 一张静态图像被转换为多个时间步上的输入脉冲帧。
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\textwidth]{docs/images/lat-enc.png}
+    \caption{延迟编码示意图。静态图像被转换为一段输入脉冲序列。}
+\end{figure}
+
+\subsection{脉冲序列}
+
+单个神经元的脉冲序列可以看作一个由 0 和 1 构成的时间数组：
+
+\begin{lstlisting}
+timestep: 0 1 2 3 4 5 ...
+spike:    1 0 0 1 0 0 ...
+\end{lstlisting}
+
+对于 MNIST 输入层，784 个像素对应 784 个输入神经元。因此，一张图像经过编码后会形成 784 条输入脉冲序列。
+
+\subsection{项目中使用的超参数}
+
+\subsubsection{Beta}
+
+Beta 表示膜电位记忆能力。较大的 beta 代表神经元保留更多过去的膜电位，较小的 beta 代表膜电位衰减更快。
+
+\begin{lstlisting}
+low beta  -> short memory
+high beta -> longer memory
+\end{lstlisting}
+
+\subsubsection{Latency Threshold}
+
+Latency threshold 控制哪些输入像素强度足以被编码为脉冲。阈值越高，越多弱像素被过滤掉，输入序列越稀疏。
+
+\begin{lstlisting}
+low threshold  -> more pixels can spike
+high threshold -> fewer and stronger pixels spike
+\end{lstlisting}
+
+\subsubsection{Inference Timesteps}
+
+推理时间步数决定网络在多少帧内积累证据。较少时间步意味着推理更短；较多时间步意味着模型有更长的证据积累窗口。
+
+\begin{lstlisting}
+fewer steps -> shorter evidence window
+more steps  -> longer temporal evidence
+\end{lstlisting}
+
+\section{数据可视化问题}
+
+\subsection{主问题}
+
+本项目的主问题是：
+
+\begin{quote}
+延迟编码后的视觉证据如何在脉冲神经网络中随时间传播？
+\end{quote}
+
+该问题关注推理过程本身，而不仅仅是最终的分类结果。
+
+\subsection{子问题}
+
+\projecttitle{} 被设计用来帮助回答以下问题：
+
+\begin{enumerate}
+    \item 输入数字的哪些像素最早发放脉冲？
+    \item 输入脉冲序列的稀疏程度如何？
+    \item 隐藏层活动如何随时间变化？
+    \item 哪个输出类别神经元积累最多脉冲？
+    \item 正确类别是在早期还是后期开始占优？
+    \item beta、latency threshold 和 timestep 数量如何改变可见动态？
+    \item 如何在不绘制所有全连接边的情况下表示大规模神经网络状态？
+\end{enumerate}
+
+\subsection{为什么普通静态图不够}
+
+普通静态图可以展示某一帧或某个统计量，但无法完整表达 SNN 推理的时序结构。读者需要能够拖动时间轴、播放推理过程、切换模型参数、选择样本，并观察多个层的协调变化。因此，交互式网页比单张图像更适合本项目。
+
+\subsection{视觉抽象策略}
+
+全连接网络包含大量边。如果直接绘制所有突触连接，画面会被边线淹没，难以理解。因此，\projecttitle{} 不绘制每条连接，而是将每一层抽象为二维网格：
+
+\begin{lstlisting}
+Input layer:    28 x 28
+Hidden layer 1: 32 x 32
+Hidden layer 2: 16 x 16
+Output layer:    1 x 10
+\end{lstlisting}
+
+这种设计保留了神经元数量和层级结构，同时避免了边连接造成的视觉噪声。
+
+\section{模型与数据生成}
+
+\subsection{网络拓扑}
+
+本项目发布版使用的模型拓扑为：
+
+\begin{lstlisting}
+784 -> 1024 -> 256 -> 10
+\end{lstlisting}
+
+该结构与可视化布局自然对应：
+
+\begin{table}[H]
+\centering
+\caption{网络层与可视化映射。}
+\begin{tabularx}{0.86\textwidth}{lrl}
+\toprule
+层 & 神经元数量 & 可视化形式 \\
+\midrule
+输入层 & 784 & $28\times28$ 网格 \\
+FC1 隐藏层 & 1024 & $32\times32$ 网格 \\
+FC2 隐藏层 & 256 & $16\times16$ 网格 \\
+输出层 & 10 & 10 个类别单元 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+选择 1024 与 256 的重要原因是它们可以形成规则方形网格。相比 512 这种不方便构成方阵的大小，方形网格更适合视觉展示。
+
+\subsection{超参数扫描}
+
+项目训练了 36 个模型变体，参数组合为：
+
+\begin{lstlisting}
+beta:              0.65, 0.75, 0.85, 0.95
+latency threshold: 0.15, 0.25, 0.35
+timesteps:         25, 40, 60
+\end{lstlisting}
+
+组合数量为：
+
+\begin{equation}
+4 \times 3 \times 3 = 36
+\end{equation}
+
+这个规模既能支持参数比较，又不会让网页交互变得过于复杂。
+
+\subsection{训练流程}
+
+训练流程在浏览器外部完成。训练 notebook 的主要步骤包括：
+
+\begin{enumerate}
+    \item 加载 MNIST 数据集；
+    \item 定义 SNN 模型结构；
+    \item 将输入图像编码为脉冲序列；
+    \item 对每个超参数组合训练模型；
+    \item 在测试集上进行评估；
+    \item 保存模型权重、checkpoint、训练历史、metadata 和完成标记。
+\end{enumerate}
+
+这些训练产物用于生成推理轨迹，但不会全部上传到网页仓库。网页只需要导出的 JSON 轨迹数据。
+
+\subsection{评估流程}
+
+每个模型在训练结束后都会进行测试集评估。评估结果包括预测类别、真实类别以及是否预测正确。这些信息被写入导出的推理轨迹和 manifest 中，用于前端显示当前样本是否分类正确。
+
+\subsection{轨迹导出流程}
+
+第二个 notebook 负责加载训练好的模型，并对选定的 MNIST 测试样本进行推理记录。每条轨迹包含：
+
+\begin{itemize}
+    \item 原始输入图像；
+    \item 真实标签与预测标签；
+    \item 每个时间步的输入层脉冲；
+    \item FC1 和 FC2 隐藏层脉冲；
+    \item 输出层脉冲；
+    \item 各层膜电位；
+    \item 输出类别累计脉冲计数；
+    \item 与模型相关的超参数 metadata。
+\end{itemize}
+
+\subsection{JSON 轨迹结构}
+
+每个样本被保存为一个 JSON 文件：
+
+\begin{lstlisting}
+spikelens_webapp/public/data/traces/<model_id>/<sample>.json
+\end{lstlisting}
+
+简化结构如下：
+
+\begin{lstlisting}
+{
+  "sample_idx": 0,
+  "true_label": 7,
+  "pred_label": 7,
+  "correct": true,
+  "num_steps": 25,
+  "beta": 0.65,
+  "latency_threshold": 0.15,
+  "original_image": [...],
+  "spikes_dense": {
+    "input": [...],
+    "fc1": [...],
+    "fc2": [...],
+    "out": [...]
+  },
+  "membrane": {
+    "fc1": [...],
+    "fc2": [...],
+    "out": [...]
+  },
+  "output_spike_counts": [...]
+}
+\end{lstlisting}
+
+实际文件更大，因为其中保存了完整的时间步和层状态数组。
+
+\subsection{Manifest 文件}
+
+由于 GitHub Pages 是静态托管，浏览器不能动态扫描服务器目录。因此项目使用：
+
+\begin{lstlisting}
+spikelens_webapp/public/data/manifest.json
+\end{lstlisting}
+
+该文件记录所有可用模型、超参数、样本路径、预测标签与统计信息。前端首先加载 manifest，再根据用户选择加载具体 JSON 轨迹。
+
+\subsection{部署数据裁剪}
+
+完整轨迹数据体积较大，尤其是膜电位数组会显著增加 JSON 文件大小。因此发布版本只保留精简子集：
+
+\begin{lstlisting}
+36 model variants x 5 samples per model = 180 traces
+\end{lstlisting}
+
+这种规模能够保证网页可用，同时仍然保留足够的模型和样本多样性。
+
+\section{可视化设计}
+
+\subsection{主网络视图}
+
+主可视化视图将 SNN 表示为层级空间布局：
+
+\begin{lstlisting}
+Input 28x28 -> FC1 32x32 -> FC2 16x16 -> Output classes 0-9
+\end{lstlisting}
+
+该布局不是严格的数学图，而是带有轻微空间透视感的层状态展示。其目的不是展示每条权重连接，而是让读者观察不同层的时间状态变化。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.94\textwidth]{docs/images/network-trace.png}
+    \caption{主网络轨迹视图。输入层、隐藏层与输出层在同一界面中同步显示。}
+\end{figure}
+
+\subsection{输入层}
+
+输入层显示当前时间步下的延迟编码脉冲帧。高亮单元表示该像素神经元在当前时间步发放脉冲。通过该视图可以观察数字笔画中哪些位置最早参与推理。
+
+\subsection{隐藏层}
+
+隐藏层分别显示为 $32\times32$ 和 $16\times16$ 网格。这些网格是神经元编号的视觉映射，不代表物理布局或卷积特征图。其主要作用是使大规模全连接层状态能够被读者快速观察。
+
+\subsection{输出层}
+
+输出层包含 10 个类别单元，对应数字 0 到 9。输出图表显示截至当前时间步的累计输出脉冲数。预测类别由累计脉冲数最大的输出神经元决定。
+
+\subsection{颜色模式}
+
+界面提供三种颜色模式：
+
+\begin{description}
+    \item[Spike mode] 显示当前时间步的二值脉冲事件，用于观察“此刻哪些神经元发放了脉冲”。
+    \item[Membrane mode] 显示膜电位强度，用于观察“哪些神经元内部状态较强或接近发放”。
+    \item[Cumulative mode] 显示累计活动，用于观察“整个推理过程中哪些神经元较常活跃”。
+\end{description}
+
+\subsection{层脉冲时间线}
+
+时间线图展示不同层在每个时间步的脉冲数量。读者可以通过该图观察输入脉冲爆发、隐藏层活动波动以及输出层脉冲积累过程。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{docs/images/layer-spike-time.png}
+    \caption{层脉冲时间线。该图帮助读者理解不同层活动随时间的变化。}
+\end{figure}
+
+\subsection{延迟编码解释面板}
+
+为了让读者理解静态图像如何变成脉冲序列，项目加入了专门的延迟编码解释面板。该面板显示：
+
+\begin{itemize}
+    \item 原始数字图像；
+    \item 首次脉冲时间图；
+    \item 当前时间步输入脉冲帧；
+    \item 从第 0 步到当前时间步的累计输入显示；
+    \item 每个时间步的输入脉冲数量。
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.94\textwidth]{docs/images/lat-enc-panel.png}
+    \caption{延迟编码解释面板。该部分将输入图像、首次脉冲时间、当前脉冲帧和累计输入统一展示。}
+\end{figure}
+
+\subsection{超参数解释面板}
+
+超参数解释面板用较清晰的语言解释 beta、latency threshold 和 inference timesteps 对模型行为的影响。该面板的目的不是展示公式，而是帮助非专业读者理解参数的实际作用。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.94\textwidth]{docs/images/params.png}
+    \caption{超参数解释面板。beta 表示膜记忆，latency threshold 表示输入筛选强度，timesteps 表示证据积累窗口。}
+\end{figure}
+
+\section{Web 应用架构}
+
+\subsection{技术栈}
+
+\begin{table}[H]
+\centering
+\caption{项目技术栈。}
+\begin{tabularx}{0.9\textwidth}{lll}
+\toprule
+层级 & 技术 & 用途 \\
+\midrule
+模型训练 & Python, PyTorch, snnTorch & 训练 SNN 并记录推理轨迹 \\
+数据格式 & JSON & 静态轨迹存储 \\
+前端框架 & Svelte & 构建交互式组件 \\
+构建工具 & Vite & 生成静态网站文件 \\
+可视化 & Canvas, SVG, D3 & 绘制层网格、图表和时间线 \\
+部署 & GitHub Pages & 静态网页托管 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{目录结构}
+
+项目目录结构如下：
+
+\begin{lstlisting}
+spikelens_bdva/
+├── README.md
+├── spikelens_webapp/
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── public/
+│   │   └── data/
+│   │       ├── manifest.json
+│   │       └── traces/
+│   └── src/
+│       ├── App.svelte
+│       ├── main.js
+│       ├── styles.css
+│       ├── components/
+│       └── lib/
+└── tools/
+    └── build_spikelens_manifest.py
+\end{lstlisting}
+
+\subsection{静态数据加载}
+
+前端加载流程为：
+
+\begin{lstlisting}
+fetch /data/manifest.json
+        -> populate model and sample selectors
+        -> fetch selected trace JSON
+        -> render visualization
+\end{lstlisting}
+
+该流程不需要后端 API。所有数据都位于 \path{public/data} 中，并在 Vite 构建时复制到最终静态网站目录。
+
+\subsection{组件结构}
+
+主要 Svelte 组件包括：
+
+\begin{table}[H]
+\centering
+\caption{前端组件与功能。}
+\begin{tabularx}{0.92\textwidth}{ll}
+\toprule
+组件 & 功能 \\
+\midrule
+\texttt{App.svelte} & 主应用状态与整体布局 \\
+\texttt{NetworkScene.svelte} & 主网络轨迹可视化 \\
+\texttt{DigitPreview.svelte} & 输入数字与脉冲预览 \\
+\texttt{OutputChart.svelte} & 输出类别脉冲图表 \\
+\texttt{TimelineChart.svelte} & 层脉冲时间线 \\
+\texttt{LayerSummary.svelte} & 当前时间步的层统计 \\
+\texttt{LatencyEncodingExplainer.svelte} & 延迟编码教学面板 \\
+\texttt{HyperparameterExplainer.svelte} & 超参数教学面板 \\
+\texttt{ResourceNotes.svelte} & 资源与引用说明 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{功能总结}
+
+\subsection{模型参数选择}
+
+用户可以分别选择 beta、latency threshold 和 inference steps。相比把所有模型变体放在一个很长的下拉菜单中，这种方式更符合参数比较的逻辑。
+
+\subsection{样本选择}
+
+用户可以选择当前模型下的输入样本。界面会显示真实标签、预测标签以及是否分类正确。
+
+\subsection{播放与拖动}
+
+时间步可以通过滑块拖动，也可以通过播放按钮自动前进。这样一次 SNN 推理可以被观看为短动画。
+
+\subsection{多视图联动}
+
+当前时间步会同步影响：
+
+\begin{itemize}
+    \item 输入脉冲帧；
+    \item 隐藏层状态；
+    \item 输出类别图表；
+    \item 时间线标记；
+    \item 延迟编码解释面板。
+\end{itemize}
+
+\section{本地运行与部署}
+
+\subsection{本地运行}
+
+运行网页应用：
+
+\begin{lstlisting}
+cd spikelens_webapp
+npm install
+npm run dev
+\end{lstlisting}
+
+\subsection{生产构建}
+
+\begin{lstlisting}
+cd spikelens_webapp
+npm run build
+npm run preview
+\end{lstlisting}
+
+\subsection{GitHub Pages 部署}
+
+对于项目页部署，Vite 的 base path 应设置为仓库名：
+
+\begin{lstlisting}
+export default defineConfig({
+  plugins: [svelte()],
+  base: '/spikelens_bdva/'
+});
+\end{lstlisting}
+
+构建后发布 \path{dist/} 到 \texttt{gh-pages} 分支即可。
+
+\section{可复现性说明}
+
+\subsection{训练 notebook}
+
+训练 notebook 负责定义模型、加载 MNIST、执行超参数扫描、训练模型、评估模型并保存训练历史。训练产物包括模型权重、checkpoint、metadata 和日志。
+
+\subsection{导出 notebook}
+
+导出 notebook 负责加载训练好的模型，对测试样本进行推理，记录各层脉冲和膜电位，并写入 JSON 文件。
+
+\subsection{Manifest 生成脚本}
+
+\path{tools/build_spikelens_manifest.py} 会扫描导出的轨迹目录，生成 \path{spikelens_webapp/public/data/manifest.json}。前端依赖该文件发现可用模型和样本。
+
+\subsection{仓库中包含与不包含的内容}
+
+发布仓库包含：
+
+\begin{itemize}
+    \item 前端源代码；
+    \item 精简后的 JSON 推理轨迹；
+    \item manifest 文件；
+    \item 报告与说明文档；
+    \item GitHub Pages 部署所需文件。
+\end{itemize}
+
+发布仓库不包含：
+
+\begin{itemize}
+    \item 原始 MNIST 数据；
+    \item PyTorch 模型 checkpoint；
+    \item Python 虚拟环境；
+    \item \texttt{node\_modules}；
+    \item 完整本地轨迹数据。
+\end{itemize}
+
+这些内容对于在线展示不是必需的，并且会显著增加仓库体积。
+
+\section{局限性}
+
+\subsection{只展示预计算轨迹}
+
+网页端不会实时运行模型。它只能展示已经导出的样本轨迹。如果需要用户上传数字并实时推理，需要增加后端服务。
+
+\subsection{发布样本数量有限}
+
+为了适配静态托管与文件体积限制，发布版本只保留部分样本。完整本地数据可以更大，但不适合全部部署到 GitHub Pages。
+
+\subsection{JSON 文件较大}
+
+为了支持膜电位可视化，轨迹中保存了较密集的数组。未来可以使用稀疏事件格式、二进制格式或压缩方式降低体积。
+
+\subsection{隐藏层网格是抽象布局}
+
+隐藏层的 $32\times32$ 与 $16\times16$ 网格只是神经元编号的视觉布局，不表示卷积特征图或真实物理拓扑。
+
+\section{未来工作}
+
+\subsection{压缩轨迹格式}
+
+未来可以将 dense JSON 改为稀疏事件记录或二进制数组，以减少下载体积并提升加载速度。
+
+\subsection{更多模型与样本}
+
+当前发布版本是精简数据集。未来可以使用后端或对象存储支持更多模型变体和更多样本。
+
+\subsection{在线推理后端}
+
+如果加入后端，可以支持用户上传自己的数字图像，并实时生成对应 SNN 推理轨迹。
+
+\subsection{模型统计面板}
+
+未来可以增加模型级统计视图，例如不同 beta 下的平均准确率、平均脉冲数、稀疏度和输出置信度。
+
+\subsection{FPGA 轨迹对比}
+
+由于项目灵感来自 SNN 硬件加速方向，未来可以进一步比较软件 snnTorch 轨迹与 FPGA 硬件轨迹，从而将可视分析扩展到硬件验证。
+
+\section{总结}
+
+\projecttitle{} 将一次脉冲神经网络推理过程转化为可交互的时序可视化。项目的主要贡献不是提出新的模型结构，而是构建了一个完整的可视分析流程：
+
+\begin{lstlisting}
+train SNN models
+record inference dynamics
+structure traces as static data
+visualize temporal propagation interactively
+explain encoding and hyperparameters to readers
+\end{lstlisting}
+
+通过该流程，SNN 的内部事件、膜电位变化和输出证据积累过程变得更加可见、可检查和可解释。
+
+\section{参考资料}
+
+\begin{enumerate}
+    \item snnTorch documentation: spike generation and conversion methods, including latency coding and rate coding.\\
+    \url{https://snntorch.readthedocs.io/en/latest/snntorch.spikegen.html}
+
+    \item snnTorch documentation: \texttt{snn.Leaky}, first-order leaky integrate-and-fire neuron model with membrane decay controlled by beta.\\
+    \url{https://snntorch.readthedocs.io/en/latest/snn.neurons_leaky.html}
+
+    \item snnTorch documentation: package overview for gradient-based learning with spiking neural networks using PyTorch.\\
+    \url{https://snntorch.readthedocs.io/en/stable/}
+
+    \item MNIST handwritten digit database, Yann LeCun, Corinna Cortes, and Christopher J. C. Burges.\\
+    \url{https://yann.lecun.org/exdb/mnist/}
+
+    \item UCI Machine Learning Repository: MNIST Database of Handwritten Digits.\\
+    \url{https://archive.ics.uci.edu/dataset/683/mnist+database+of+handwritten+digits}
+
+    \item Vite documentation: static asset handling and \texttt{public/} directory behavior.\\
+    \url{https://vite.dev/guide/assets}
+
+    \item Vite documentation: static deployment and GitHub Pages deployment guidance.\\
+    \url{https://vite.dev/guide/static-deploy}
+
+    \item Svelte documentation and project site.\\
+    \url{https://svelte.dev/}
+
+    \item D3 documentation: line generator for SVG path data.\\
+    \url{https://d3js.org/d3-shape/line}
+
+    \item GitHub Pages documentation: configuring a publishing source for a GitHub Pages site.\\
+    \url{https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site}
+
+    \item CTAN: ctex package for Chinese typesetting in LaTeX.\\
+    \url{https://ctan.org/pkg/ctex}
+\end{enumerate}
+
+\end{document}

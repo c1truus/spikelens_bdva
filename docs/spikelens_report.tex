@@ -1,0 +1,969 @@
+% SpikeLens BDVA Project Report
+% Compile from the repository root with:
+%   pdflatex spikelens_report.tex
+% or copy this file to the repository root and run:
+%   latexmk -pdf spikelens_report.tex
+%
+% Expected image paths:
+%   docs/images/abs.png
+%   docs/images/mnist-image.png
+%   docs/images/lat-enc.png
+%   docs/images/network-trace.png
+%   docs/images/layer-spike-time.png
+%   docs/images/lat-enc-panel.png
+%   docs/images/params.png
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    citecolor=blue!50!black,
+    urlcolor=blue!50!black,
+    pdftitle={SpikeLens: Interactive Visualization of Spiking Neural Network Inference},
+    pdfauthor={Ganbold Munkhtur},
+    pdfsubject={Big Data Visualization and Visual Analysis Final Project},
+    pdfkeywords={spiking neural network, visualization, snnTorch, MNIST, latency encoding, Svelte, Vite, GitHub Pages}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{SpikeLens BDVA Project Report}
+\rhead{\thepage}
+\setlength{\headheight}{14pt}
+
+\definecolor{codebg}{RGB}{245,247,250}
+\definecolor{codeframe}{RGB}{210,215,222}
+\definecolor{darkblue}{RGB}{20,48,86}
+\definecolor{softgray}{RGB}{85,90,100}
+
+\lstdefinestyle{reportcode}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{codeframe},
+    showstringspaces=false,
+    tabsize=2,
+    columns=fullflexible
+}
+\lstset{style=reportcode}
+
+\titleformat{\section}
+  {\Large\bfseries\color{darkblue}}
+  {\thesection}{0.8em}{}
+\titleformat{\subsection}
+  {\large\bfseries\color{darkblue}}
+  {\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{darkblue}}
+  {\thesubsubsection}{0.8em}{}
+
+\setlist[itemize]{leftmargin=1.4em,itemsep=0.25em,topsep=0.35em}
+\setlist[enumerate]{leftmargin=1.6em,itemsep=0.25em,topsep=0.35em}
+
+\newcommand{\projecttitle}{SpikeLens}
+\newcommand{\repoURL}{\url{https://github.com/c1truus/spikelens_bdva}}
+\newcommand{\siteURL}{\url{https://c1truus.github.io/spikelens_bdva/}}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1.5cm}
+    {\Huge\bfseries SpikeLens\par}
+    \vspace{0.4cm}
+    {\Large Interactive Visualization of Spiking Neural Network Inference\par}
+    \vspace{1cm}
+    {\large Big Data Visualization and Visual Analysis Final Project\par}
+    \vspace{1.5cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.86\textwidth]{docs/images/abs.png}
+        \caption*{Project overview and visual interface snapshot.}
+    \end{figure}
+    \vfill
+    \begin{tabular}{rl}
+        Project site: & \siteURL \\
+        Repository: & \repoURL \\
+        Author: & Ganbold Munkhtur \\
+        Report type: & README-style technical project report \\
+    \end{tabular}
+    \vspace*{1cm}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Project Overview}
+
+\subsection{Abstract}
+
+\projecttitle{} is an interactive static web application for visualizing how a spiking neural network transforms a latency-coded MNIST digit into a class decision over time. Instead of treating neural network inference as a single final prediction, the project opens the inference process and represents it as a short temporal sequence of input spikes, hidden-layer spike activity, membrane potentials, and output-class evidence.
+
+The final website allows the viewer to compare multiple trained model variants, change selected hyperparameters, choose input samples, scrub through timesteps, play the inference sequence as a short animation, inspect spike counts, and read guided explanations of input encoding and model behavior.
+
+The project is intentionally designed as a static website. The neural network is not executed in the browser. Instead, training and inference recording are performed offline using Python, PyTorch, and snnTorch. The resulting traces are exported into JSON files and loaded by the frontend from GitHub Pages.
+
+\subsection{Core Visualization Question}
+
+The central visualization question is:
+
+\begin{quote}
+How does a spiking neural network accumulate temporal evidence from a latency-coded handwritten digit, and how do model hyperparameters affect the visible propagation of spikes and membrane potentials through the network?
+\end{quote}
+
+This is different from simply asking whether the model predicts the correct digit. The goal is to visualize the hidden temporal process that leads to the classification result.
+
+\subsection{Final Outcome}
+
+The project produces:
+
+\begin{itemize}
+    \item A trained set of SNN model variants.
+    \item Exported inference traces containing spike events and membrane potentials.
+    \item A manifest-based static data structure for browser loading.
+    \item A Svelte/Vite web application hosted with GitHub Pages.
+    \item A visual interface showing input spikes, hidden-layer activity, membrane potential intensity, output spike accumulation, timestep playback, latency encoding explanation, and hyperparameter explanation.
+\end{itemize}
+
+\section{Motivation and Idea Development}
+
+\subsection{Initial Project Direction}
+
+The original idea came from practical work on spiking neural network acceleration. That work already required reasoning about spike events, timestep-based inference, latency encoding, and layer-wise neuron activity. This made SNN inference a natural candidate for a visualization project.
+
+A normal artificial neural network usually appears as a static mapping:
+
+\begin{lstlisting}
+input image -> output class
+\end{lstlisting}
+
+A spiking neural network is more naturally temporal:
+
+\begin{lstlisting}
+input image -> spike sequence -> layer activity over time -> output spike counts
+\end{lstlisting}
+
+This temporal structure creates a stronger visualization opportunity because the model's computation is not only a value transformation, but also an event sequence.
+
+\subsection{Why SNN Inference Needs Visualization}
+
+Spiking neural networks are not only defined by final activations. They operate through discrete spike events and internal membrane states. A neuron may remain silent for many timesteps, accumulate membrane potential, and then emit a binary spike only when its firing threshold is crossed.
+
+This means useful information exists at several levels:
+
+\begin{itemize}
+    \item Which input pixels spike early?
+    \item Which hidden neurons become active?
+    \item How sparse is the activity?
+    \item Which output neuron accumulates the most spikes?
+    \item How do hyperparameters change the dynamics?
+\end{itemize}
+
+These questions are difficult to answer from an accuracy number or a static confusion matrix. \projecttitle{} turns the inference sequence into an inspectable visual object.
+
+\subsection{Why a Static Web App}
+
+A live Python backend would allow real-time model inference, but it would make deployment more complex. For a final course project, the priority was to create a reliable, shareable, and visually polished interactive system.
+
+Therefore, \projecttitle{} uses the following design:
+
+\begin{lstlisting}
+offline training and trace export
+        -> JSON trace dataset
+        -> static Svelte/Vite web app
+        -> GitHub Pages deployment
+\end{lstlisting}
+
+The browser only loads precomputed data. This makes the final project easy to open, easy to grade, and independent of local Python, PyTorch, CUDA, or snnTorch installations.
+
+\subsection{Design Constraints}
+
+The project was guided by several constraints:
+
+\begin{itemize}
+    \item The website should run without a backend.
+    \item The dataset must be small enough for GitHub Pages.
+    \item The visualization must remain readable despite hundreds or thousands of neurons.
+    \item The interaction should be simple enough for a first-time viewer.
+    \item The project should explain SNN concepts, not only display them.
+\end{itemize}
+
+\section{Background}
+
+\subsection{MNIST Dataset}
+
+MNIST is a handwritten digit classification dataset. Each input sample is a 28$\times$28 grayscale image representing a digit from 0 to 9. The dataset is widely used as a benchmark for image classification and contains a standard training and testing split.
+
+\projecttitle{} uses MNIST because it is visually intuitive. A reader can immediately recognize the digit and compare it with the network prediction. The 28$\times$28 input size also maps naturally to a 28$\times$28 grid, which is ideal for visualizing input spikes.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.78\textwidth]{docs/images/mnist-image.png}
+    \caption{MNIST input example used as the visual source for spike encoding.}
+    \label{fig:mnist-image}
+\end{figure}
+
+\subsection{Spiking Neural Networks}
+
+A spiking neural network represents information using discrete spike events over time. Instead of every neuron producing a continuous activation value at once, neurons emit binary spikes at particular timesteps.
+
+In a simplified comparison:
+
+\begin{lstlisting}
+standard neural network: continuous activation values
+spiking neural network: binary events across discrete time
+\end{lstlisting}
+
+This makes the network temporally structured. For visualization, this is useful because inference becomes a short sequence rather than a single static computation.
+
+\subsection{Leaky Integrate-and-Fire Neurons}
+
+\projecttitle{} uses leaky integrate-and-fire behavior through snnTorch. A leaky neuron maintains a membrane potential. Incoming current increases the membrane potential, while a decay factor reduces stored potential over time. If the membrane crosses a threshold, the neuron emits a spike.
+
+The main intuition is:
+
+\begin{lstlisting}
+input current arrives
+        -> membrane potential accumulates
+        -> old potential decays by beta
+        -> threshold crossing produces a spike
+\end{lstlisting}
+
+In this project, the membrane state is visualized as intensity. In membrane mode, darker cells represent lower membrane values and brighter cells represent stronger membrane states.
+
+\subsection{Latency Encoding}
+
+MNIST images are static, but SNNs operate over time. To feed images into the SNN, the project uses latency encoding.
+
+Latency encoding converts pixel brightness into spike timing:
+
+\begin{itemize}
+    \item Bright pixels spike earlier.
+    \item Darker pixels spike later.
+    \item Very weak pixels may not spike.
+    \item One image becomes a short temporal sequence of input spike frames.
+\end{itemize}
+
+For example, a bright stroke pixel in the digit may spike at timestep 0 or 1, while a dim antialiased edge pixel may spike later. This creates a sparse temporal input stream from a static image.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{docs/images/lat-enc.png}
+    \caption{Latency encoding converts a static 28$\times$28 digit into a sequence of spike frames. Brighter pixels fire earlier and weak pixels may remain silent.}
+    \label{fig:latency-encoding}
+\end{figure}
+
+\subsection{Spike Train}
+
+A spike train is a sequence of binary events over time. For one neuron:
+
+\begin{lstlisting}
+timestep: 0 1 2 3 4 5 ...
+spike:    1 0 0 1 0 0 ...
+\end{lstlisting}
+
+For the MNIST input layer, there are 784 input neurons, one for each pixel. Therefore, one encoded image becomes 784 small spike trains.
+
+\subsection{Hyperparameters Used}
+
+\projecttitle{} exposes three main hyperparameters:
+
+\begin{description}[leftmargin=2.7cm,style=nextline]
+    \item[Beta] Controls membrane memory. A higher beta means the neuron remembers more previous membrane potential. A lower beta means the membrane decays faster.
+    \item[Latency threshold] Controls which input pixel intensities are strong enough to become spikes. A stricter threshold removes weak pixels and creates a sparser input sequence.
+    \item[Inference timesteps] Controls how many frames the SNN receives before making a decision. More timesteps give the model a longer evidence window, but also create a longer visualization sequence.
+\end{description}
+
+\section{Data Visualization Question}
+
+\subsection{Main Question}
+
+The main question is:
+
+\begin{quote}
+How does latency-coded visual evidence propagate through a spiking neural network over time?
+\end{quote}
+
+The project focuses on visualizing the process, not only the result.
+
+\subsection{Subquestions}
+
+\projecttitle{} is designed to help answer:
+
+\begin{enumerate}
+    \item Which pixels of the input digit spike early?
+    \item How sparse is the input spike train?
+    \item How does hidden-layer activity change over time?
+    \item Which class neuron accumulates output spikes?
+    \item Does the correct class dominate early or late?
+    \item How do beta, latency threshold, and timestep count affect visible dynamics?
+    \item How can a dense neural process be represented without drawing every synapse?
+\end{enumerate}
+
+\subsection{Why Static Plots Are Not Enough}
+
+A static plot can show one frame or one summary statistic, but it does not provide a strong interactive experience for temporal inference. The viewer needs to move through timesteps, compare different model settings, choose samples, and inspect layers together.
+
+\projecttitle{} uses a web interface because the project benefits from playback, scrubbing, dropdown controls, clickable timelines, coordinated views, explanatory sections, and shareable deployment.
+
+\subsection{Visual Abstraction Strategy}
+
+A fully connected network contains too many synapses to draw clearly. The actual model includes large dense connections between layers. Drawing all edges would create visual clutter and would not help the reader understand the temporal dynamics.
+
+Instead, \projecttitle{} abstracts each layer as a grid:
+
+\begin{table}[H]
+\centering
+\caption{Layer-to-grid mapping used in the visual interface.}
+\begin{tabular}{lll}
+\toprule
+Layer & Neuron count & Visual grid \\
+\midrule
+Input & 784 & 28$\times$28 \\
+Hidden layer 1 & 1024 & 32$\times$32 \\
+Hidden layer 2 & 256 & 16$\times$16 \\
+Output & 10 & 1$\times$10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This keeps the actual neuron count visible while avoiding unreadable edge clutter.
+
+\section{Model and Data Generation}
+
+\subsection{Network Topology}
+
+The model topology used for the published visualization is:
+
+\begin{lstlisting}
+784 -> 1024 -> 256 -> 10
+\end{lstlisting}
+
+This maps naturally to the visualization layout:
+
+\begin{table}[H]
+\centering
+\caption{Network topology and visualization mapping.}
+\begin{tabular}{lll}
+\toprule
+Layer & Size & Visualization \\
+\midrule
+Input & 784 & 28$\times$28 grid \\
+FC1 hidden layer & 1024 & 32$\times$32 grid \\
+FC2 hidden layer & 256 & 16$\times$16 grid \\
+Output & 10 & 10 class cells \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The 1024 and 256 hidden sizes were selected because they form square grids. This makes the visualization more legible than using a non-square hidden size.
+
+\subsection{Hyperparameter Sweep}
+
+The model variants were trained across combinations of:
+
+\begin{lstlisting}
+beta:              0.65, 0.75, 0.85, 0.95
+latency threshold: 0.15, 0.25, 0.35
+timesteps:         25, 40, 60
+\end{lstlisting}
+
+This gives:
+
+\begin{equation}
+4 \times 3 \times 3 = 36 \text{ model variants.}
+\end{equation}
+
+This is large enough to support comparison, but small enough to keep the web interface manageable.
+
+\subsection{Training Pipeline}
+
+Training was performed offline in Python using PyTorch and snnTorch. The training notebook performs the following steps:
+
+\begin{enumerate}
+    \item Load MNIST.
+    \item Define the SNN model.
+    \item Encode input images into spike trains.
+    \item Train each model variant for a fixed number of epochs.
+    \item Evaluate each model on the test set.
+    \item Save model checkpoint, model state dictionary, training history, metadata, and completion marker.
+\end{enumerate}
+
+The training artifacts are useful for reproducibility, but they are not required by the deployed website.
+
+\subsection{Evaluation Pipeline}
+
+Each model variant is evaluated after training. The evaluation records classification behavior such as predicted class and correctness. This is useful because the web interface can display whether the selected trace is correct or incorrect.
+
+The final website does not run model evaluation live. Instead, it reads evaluation information embedded in the exported trace files and manifest.
+
+\subsection{Trace Export Pipeline}
+
+After training, a second notebook loads each trained model and records inference traces for selected MNIST test samples.
+
+For each selected sample, the export pipeline records:
+
+\begin{itemize}
+    \item original image,
+    \item true label,
+    \item predicted label,
+    \item correctness,
+    \item input spike frames,
+    \item FC1 spike frames,
+    \item FC2 spike frames,
+    \item output spike frames,
+    \item membrane potentials,
+    \item per-layer spike counts,
+    \item output spike accumulation,
+    \item metadata such as beta, latency threshold, and timestep count.
+\end{itemize}
+
+This exported trace is the main dataset used by the web app.
+
+\subsection{JSON Trace Structure}
+
+Each exported sample is saved under:
+
+\begin{lstlisting}
+spikelens_webapp/public/data/traces/<model_id>/<sample>.json
+\end{lstlisting}
+
+A simplified trace contains:
+
+\begin{lstlisting}[language=json]
+{
+  "sample_idx": 0,
+  "true_label": 7,
+  "pred_label": 7,
+  "correct": true,
+  "num_steps": 25,
+  "beta": 0.65,
+  "latency_threshold": 0.15,
+  "original_image": [...],
+  "spikes_dense": {
+    "input": [...],
+    "fc1": [...],
+    "fc2": [...],
+    "out": [...]
+  },
+  "membrane": {
+    "fc1": [...],
+    "fc2": [...],
+    "out": [...]
+  },
+  "output_spike_counts": [...]
+}
+\end{lstlisting}
+
+The exact JSON is larger because it stores full timestep-by-layer arrays.
+
+\subsection{Manifest File}
+
+The web app needs a way to discover available models and samples. Since GitHub Pages is static hosting, the browser cannot list directories dynamically. Therefore, the export workflow creates:
+
+\begin{lstlisting}
+spikelens_webapp/public/data/manifest.json
+\end{lstlisting}
+
+The manifest lists available model variants, hyperparameters for each model, sample file paths, labels and predictions, sample counts, and correctness counts. The app first loads the manifest, then fetches the selected trace JSON file.
+
+\subsection{Dataset Reduction for Deployment}
+
+The full local trace dataset can become very large. Dense membrane arrays make each JSON file several megabytes. Publishing all models and many samples would exceed practical hosting limits.
+
+Therefore, the deployed version uses a reduced subset:
+
+\begin{equation}
+36 \text{ model variants} \times 5 \text{ samples per model} = 180 \text{ traces.}
+\end{equation}
+
+This keeps the website interactive and deployable while preserving enough variety for comparison.
+
+\section{Visualization Design}
+
+\subsection{Main Network View}
+
+The main visualization shows the SNN as a layer-by-layer spatial layout:
+
+\begin{lstlisting}
+Input 28x28 -> FC1 32x32 -> FC2 16x16 -> Output classes 0-9
+\end{lstlisting}
+
+The layers are arranged as an isometric-style composition rather than a strict mathematical diagram. This makes the network feel like a temporal system while still keeping the layer structure readable.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\textwidth]{docs/images/network-trace.png}
+    \caption{Main network trace view showing input, hidden layers, and output class activity at a selected timestep.}
+    \label{fig:network-trace}
+\end{figure}
+
+\subsection{Input Layer}
+
+The input layer shows the current latency-coded spike frame. Bright cells indicate pixels that spike at the selected timestep. This view answers which parts of the digit fire early, how sparse the input is at the current timestep, and which pixels contribute to the temporal input stream.
+
+\subsection{Hidden Layers}
+
+The hidden layers are shown as grids:
+
+\begin{lstlisting}
+FC1: 32x32
+FC2: 16x16
+\end{lstlisting}
+
+This spatial arrangement is not a physical layout of the model weights. It is a visual indexing method. Neuron IDs are mapped into square grids to make activity patterns readable.
+
+\subsection{Output Layer}
+
+The output layer is shown as 10 cells, one for each digit class. The output decision chart shows cumulative output spikes up to the current timestep. The predicted class is the output neuron with the largest spike count.
+
+\subsection{Color Modes}
+
+\projecttitle{} includes three layer coloring modes:
+
+\begin{description}[leftmargin=2.8cm,style=nextline]
+    \item[Spike mode] Shows binary spike events at the current timestep. It answers: which neurons fired now?
+    \item[Membrane mode] Shows membrane potential intensity. It answers: which neurons are close to firing or strongly activated internally?
+    \item[Cumulative mode] Shows accumulated spike activity over time. It answers: which neurons have been active across the inference sequence?
+\end{description}
+
+\subsection{Timeline View}
+
+The timeline chart displays per-layer spike counts over time. It supports scrubbing and jumping to a timestep. The timeline is useful because it shows global temporal structure: early input bursts, hidden-layer activity waves, output spike accumulation, and changes across timestep settings.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\textwidth]{docs/images/layer-spike-time.png}
+    \caption{Layer spike timeline showing per-layer spike counts over the inference sequence.}
+    \label{fig:timeline}
+\end{figure}
+
+\subsection{Latency Encoding Explainer}
+
+The project includes a dedicated input encoding section because latency encoding is not obvious to general readers. This section shows the original digit image, first-spike timing map, current spike frame, accumulated input reveal, and spike count per encoding timestep.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\textwidth]{docs/images/lat-enc-panel.png}
+    \caption{Interactive latency encoding explainer panel.}
+    \label{fig:latency-panel}
+\end{figure}
+
+\subsection{Hyperparameter Explainer}
+
+The hyperparameter explainer teaches the meaning of beta, latency threshold, and inference timesteps. Rather than only showing numeric dropdowns, it explains what each parameter controls in human terms:
+
+\begin{lstlisting}
+beta              -> membrane memory
+latency threshold -> input cutoff
+timesteps         -> evidence window
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\textwidth]{docs/images/params.png}
+    \caption{Hyperparameter explanation section for beta, latency threshold, and timestep count.}
+    \label{fig:parameters}
+\end{figure}
+
+\section{Web Application Architecture}
+
+\subsection{Tech Stack}
+
+\begin{table}[H]
+\centering
+\caption{Technology stack used in \projecttitle{}.}
+\begin{tabularx}{\textwidth}{lll}
+\toprule
+Layer & Technology & Purpose \\
+\midrule
+Model training & Python, PyTorch, snnTorch & Train SNNs and record traces \\
+Data format & JSON & Static trace storage \\
+Frontend & Svelte & Component-based interactive interface \\
+Build tool & Vite & Static site build \\
+Visualization & Canvas, SVG, D3 & Layer grids, charts, timelines \\
+Hosting & GitHub Pages & Static deployment \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Folder Structure}
+
+\begin{lstlisting}
+spikelens_bdva/
+|-- README.md
+|-- spikelens_webapp/
+|   |-- index.html
+|   |-- package.json
+|   |-- vite.config.js
+|   |-- public/
+|   |   `-- data/
+|   |       |-- manifest.json
+|   |       `-- traces/
+|   `-- src/
+|       |-- App.svelte
+|       |-- main.js
+|       |-- styles.css
+|       |-- components/
+|       `-- lib/
+`-- tools/
+    `-- build_spikelens_manifest.py
+\end{lstlisting}
+
+\subsection{Static Data Loading}
+
+The browser loads data in two stages:
+
+\begin{lstlisting}
+fetch /data/manifest.json
+        -> populate model and sample selectors
+        -> fetch selected trace JSON
+        -> render visualization
+\end{lstlisting}
+
+The website does not require a server API. All data is stored under \texttt{public/data}, which is copied into the Vite build output.
+
+\subsection{Svelte Component Structure}
+
+\begin{table}[H]
+\centering
+\caption{Main frontend components.}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+Component & Role \\
+\midrule
+\texttt{App.svelte} & Main application state and layout \\
+\texttt{NetworkScene.svelte} & Isometric network trace visualization \\
+\texttt{DigitPreview.svelte} & Original digit and input spike preview \\
+\texttt{OutputChart.svelte} & Output class spike chart \\
+\texttt{TimelineChart.svelte} & Per-layer spike timeline \\
+\texttt{LayerSummary.svelte} & Current timestep spike counts \\
+\texttt{LatencyEncodingExplainer.svelte} & Educational input encoding panel \\
+\texttt{HyperparameterExplainer.svelte} & Educational hyperparameter panel \\
+\texttt{ResourceNotes.svelte} & References and resource notes \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Visualization Implementation}
+
+The network layer grids are rendered using heatmap-style components for performance and pixel-level control. Timeline and output charts use SVG and D3-style data mapping.
+
+The main visual design avoids rendering all fully connected edges. Instead, it uses abstract curved connectors and focuses on the state of the layers.
+
+\subsection{Deployment Model}
+
+The final site is deployed as a static GitHub Pages project site. The production build is generated with Vite:
+
+\begin{lstlisting}
+npm run build
+\end{lstlisting}
+
+The built \texttt{dist/} folder contains:
+
+\begin{lstlisting}
+index.html
+assets/
+data/manifest.json
+data/traces/
+\end{lstlisting}
+
+The \texttt{gh-pages} branch is used as the publishing branch.
+
+\section{Features}
+
+\subsection{Model Variant Controls}
+
+The interface allows model selection through separate hyperparameter controls: beta, latency threshold, and inference steps. This avoids a long unreadable dropdown and makes parameter comparison explicit.
+
+\subsection{Sample Selection}
+
+The user can choose input samples from the selected model variant. The sample label and prediction are shown directly in the selector and status card.
+
+\subsection{Playback}
+
+The user can play the inference sequence as a short animation. The playback can also be paused and scrubbed manually. This turns an SNN trace into an inference movie.
+
+\subsection{Timestep Slider}
+
+The timestep slider controls the currently displayed frame. It synchronizes input spike frame, hidden-layer state, output chart, timeline marker, and explanatory panels.
+
+\subsection{Layer Coloring Modes}
+
+The interface supports spike, membrane, and cumulative modes. These modes expose different aspects of the SNN computation.
+
+\subsection{Output Decision Chart}
+
+The output chart shows cumulative spikes per digit class. This directly connects temporal spiking behavior to the final classification.
+
+\section{Running the Project Locally}
+
+\subsection{Requirements}
+
+Recommended environment:
+
+\begin{lstlisting}
+Node.js 18 or newer
+npm
+Git
+\end{lstlisting}
+
+The webapp itself does not require Python.
+
+\subsection{Install Dependencies}
+
+\begin{lstlisting}
+cd spikelens_webapp
+npm install
+\end{lstlisting}
+
+\subsection{Development Server}
+
+\begin{lstlisting}
+npm run dev
+\end{lstlisting}
+
+Then open the local URL printed by Vite.
+
+\subsection{Production Build}
+
+\begin{lstlisting}
+npm run build
+npm run preview
+\end{lstlisting}
+
+\subsection{Deployment}
+
+For GitHub Pages project deployment, the Vite base path should match the repository name:
+
+\begin{lstlisting}[language=JavaScript]
+export default defineConfig({
+  plugins: [svelte()],
+  base: '/spikelens_bdva/'
+});
+\end{lstlisting}
+
+Build and publish:
+
+\begin{lstlisting}
+cd spikelens_webapp
+npm run build
+\end{lstlisting}
+
+Then publish \texttt{dist/} to the \texttt{gh-pages} branch.
+
+\section{Reproducibility}
+
+\subsection{Training Notebooks}
+
+The full training process is handled outside the deployed website using notebooks such as:
+
+\begin{lstlisting}
+01_train_spikelens_sweep_fixed.ipynb
+\end{lstlisting}
+
+The training notebook defines the SNN, loads MNIST, performs the hyperparameter sweep, trains each model, evaluates each model, and saves checkpoints and histories.
+
+\subsection{Export Notebook}
+
+The trace export process is handled by:
+
+\begin{lstlisting}
+02_export_spikelens_traces_fixed.ipynb
+\end{lstlisting}
+
+The export notebook loads trained model variants, selects test samples, runs inference, records layer spikes, records membrane potentials, and writes JSON traces.
+
+\subsection{Manifest Builder}
+
+The manifest builder scans exported trace folders and writes:
+
+\begin{lstlisting}
+spikelens_webapp/public/data/manifest.json
+\end{lstlisting}
+
+This file lets the static frontend discover the available model variants and trace files.
+
+\subsection{Included and Excluded Files}
+
+The published repository includes frontend source code, a reduced JSON trace dataset, the manifest file, static deployment setup, and this project report.
+
+The repository intentionally excludes raw MNIST files, PyTorch model checkpoints, Python virtual environments, \texttt{node\_modules}, full local trace datasets, and training-only artifacts. These files are unnecessary for the hosted interactive visualization and would make the repository too large.
+
+\section{Development Notes}
+
+\subsection{Why Use Precomputed Traces}
+
+Running PyTorch and snnTorch directly in the browser is not practical for this project. Precomputing traces gives predictable performance, simple deployment, no backend cost, reproducible visual states, and easier grading and sharing.
+
+\subsection{Why Use JSON}
+
+JSON is easy for JavaScript to load and inspect. It also makes the data structure transparent. The tradeoff is file size: dense membrane arrays are large. A future version could use binary formats or compression.
+
+\subsection{Why Use Square Layer Grids}
+
+The hidden layer sizes were chosen partly for visual clarity:
+
+\begin{lstlisting}
+1024 = 32 x 32
+256  = 16 x 16
+\end{lstlisting}
+
+This allows each hidden layer to appear as a complete square heatmap.
+
+\subsection{Why Not Draw Every Synapse}
+
+A fully connected layer contains too many connections to draw meaningfully. For example:
+
+\begin{align}
+784 \times 1024 &= 802{,}816, \\
+1024 \times 256 &= 262{,}144, \\
+256 \times 10 &= 2{,}560.
+\end{align}
+
+Drawing every edge would dominate the screen and hide the temporal activity. \projecttitle{} therefore visualizes layer states instead of individual weights.
+
+\section{Limitations}
+
+\subsection{Static Dataset}
+
+The web app only shows precomputed inference traces. It does not train or run models live in the browser.
+
+\subsection{Reduced Published Sample Count}
+
+The deployed version uses a subset of the full local traces to keep the site size manageable. This is sufficient for demonstration, but it does not expose every recorded sample.
+
+\subsection{Dense JSON Size}
+
+The trace files are large because they include dense membrane arrays. This is useful for visualization but inefficient for deployment.
+
+\subsection{Abstract Hidden-Layer Layout}
+
+The 32$\times$32 and 16$\times$16 hidden grids represent neuron index layout, not physical geometry or learned feature maps.
+
+\subsection{MNIST Scope}
+
+MNIST is useful for visualization and debugging, but it is a simple benchmark. More complex datasets would create richer but more difficult visual patterns.
+
+\section{Future Work}
+
+\subsection{Compressed Trace Format}
+
+A future version could store sparse spike events and compressed membrane values instead of dense arrays. Possible improvements include gzip compression, binary arrays, per-layer quantization, event-only storage, and lazy loading by timestep.
+
+\subsection{More Samples and Model Variants}
+
+The local training system can support more samples than the public site. A future version could add server-side storage or chunked downloads.
+
+\subsection{Live Backend Inference}
+
+A backend version could allow users to upload their own digit image or change parameters dynamically, then run inference on demand.
+
+\subsection{Model Accuracy Dashboard}
+
+The current app focuses on individual traces. A future dashboard could show accuracy by beta, accuracy by latency threshold, average spike count, average output confidence, and sparsity statistics.
+
+\subsection{FPGA Trace Integration}
+
+Because the idea came from an FPGA SNN accelerator project, a future version could compare snnTorch software traces with FPGA hardware traces. This would connect visual analytics to hardware verification.
+
+\section{Report Summary}
+
+\projecttitle{} demonstrates how a neural network inference process can be treated as a temporal visual dataset. Instead of only reporting classification accuracy, the project captures internal SNN activity and turns it into an interactive explanation.
+
+The main contribution is not a new SNN model. The contribution is a visual analytics workflow:
+
+\begin{lstlisting}
+train SNN models
+-> record inference dynamics
+-> structure traces as static data
+-> visualize temporal propagation interactively
+-> explain encoding and hyperparameters to non-specialist readers
+\end{lstlisting}
+
+This makes the hidden behavior of a spiking neural network more visible, inspectable, and teachable.
+
+\section{Figure Checklist}
+
+\begin{longtable}{lll}
+\caption{Suggested figure list for the final report.} \\
+\toprule
+Figure & Suggested path & Purpose \\
+\midrule
+\endfirsthead
+\toprule
+Figure & Suggested path & Purpose \\
+\midrule
+\endhead
+Project overview & \texttt{docs/images/abs.png} & Shows the final website layout \\
+MNIST input & \texttt{docs/images/mnist-image.png} & Introduces input data \\
+Latency encoding & \texttt{docs/images/lat-enc.png} & Explains pixel-to-spike conversion \\
+Network trace & \texttt{docs/images/network-trace.png} & Shows layer activity visualization \\
+Timeline chart & \texttt{docs/images/layer-spike-time.png} & Shows temporal spike count view \\
+Latency panel & \texttt{docs/images/lat-enc-panel.png} & Shows the educational encoding section \\
+Hyperparameter panel & \texttt{docs/images/params.png} & Explains beta, threshold, and timesteps \\
+\bottomrule
+\end{longtable}
+
+\section{References}
+
+\begin{thebibliography}{99}
+
+\bibitem{snntorch-spikegen}
+snnTorch documentation. \textit{snntorch.spikegen: Spike generation and conversion methods}. Available at: \url{https://snntorch.readthedocs.io/en/latest/snntorch.spikegen.html}
+
+\bibitem{snntorch-latency-tutorial}
+snnTorch documentation. \textit{Tutorial 1: Spike Encoding}. Available at: \url{https://snntorch.readthedocs.io/en/latest/tutorials/tutorial_1.html}
+
+\bibitem{snntorch-leaky}
+snnTorch documentation. \textit{snn.Leaky: Leaky integrate-and-fire neuron model}. Available at: \url{https://snntorch.readthedocs.io/en/latest/snn.neurons_leaky.html}
+
+\bibitem{snntorch-main}
+snnTorch documentation. \textit{snnTorch package documentation}. Available at: \url{https://snntorch.readthedocs.io/}
+
+\bibitem{mnist}
+Y. LeCun, C. Cortes, and C. J. C. Burges. \textit{The MNIST Database of Handwritten Digits}. Available at: \url{https://yann.lecun.org/exdb/mnist/}
+
+\bibitem{vite-assets}
+Vite documentation. \textit{Static Asset Handling}. Available at: \url{https://vite.dev/guide/assets}
+
+\bibitem{vite-deploy}
+Vite documentation. \textit{Static Deploy}. Available at: \url{https://vite.dev/guide/static-deploy}
+
+\bibitem{svelte}
+Svelte documentation. Available at: \url{https://svelte.dev/}
+
+\bibitem{d3-line}
+D3 documentation. \textit{Line generator}. Available at: \url{https://d3js.org/d3-shape/line}
+
+\bibitem{github-pages}
+GitHub Docs. \textit{Configuring a publishing source for your GitHub Pages site}. Available at: \url{https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site}
+
+\end{thebibliography}
+
+\end{document}
