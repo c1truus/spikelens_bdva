@@ -1,0 +1,1975 @@
+{
+  "created_by": "tools/build_spikelens_manifest.py",
+  "architecture": {
+    "input": 784,
+    "fc1": 1024,
+    "fc2": 256,
+    "out": 10,
+    "grid_shapes": {
+      "input": [
+        28,
+        28
+      ],
+      "fc1": [
+        32,
+        32
+      ],
+      "fc2": [
+        16,
+        16
+      ],
+      "out": [
+        1,
+        10
+      ]
+    }
+  },
+  "variants": [
+    {
+      "model_id": "beta065_lat015_steps25",
+      "beta": 65.0,
+      "latency_threshold": 15.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta065_lat015_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta065_lat015_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta065_lat015_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta065_lat015_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta065_lat015_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta065_lat015_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta065_lat015_steps40",
+      "beta": 65.0,
+      "latency_threshold": 15.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta065_lat015_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta065_lat015_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta065_lat015_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta065_lat015_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta065_lat015_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta065_lat015_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta065_lat015_steps60",
+      "beta": 65.0,
+      "latency_threshold": 15.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta065_lat015_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta065_lat015_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta065_lat015_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta065_lat015_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta065_lat015_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta065_lat015_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta065_lat025_steps25",
+      "beta": 65.0,
+      "latency_threshold": 25.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta065_lat025_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta065_lat025_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta065_lat025_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta065_lat025_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta065_lat025_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta065_lat025_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta065_lat025_steps40",
+      "beta": 65.0,
+      "latency_threshold": 25.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta065_lat025_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta065_lat025_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta065_lat025_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta065_lat025_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta065_lat025_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta065_lat025_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta065_lat025_steps60",
+      "beta": 65.0,
+      "latency_threshold": 25.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta065_lat025_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta065_lat025_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta065_lat025_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta065_lat025_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta065_lat025_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta065_lat025_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta065_lat035_steps25",
+      "beta": 65.0,
+      "latency_threshold": 35.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta065_lat035_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta065_lat035_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta065_lat035_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta065_lat035_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta065_lat035_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta065_lat035_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta065_lat035_steps40",
+      "beta": 65.0,
+      "latency_threshold": 35.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta065_lat035_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta065_lat035_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta065_lat035_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta065_lat035_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta065_lat035_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta065_lat035_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta065_lat035_steps60",
+      "beta": 65.0,
+      "latency_threshold": 35.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta065_lat035_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta065_lat035_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta065_lat035_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta065_lat035_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta065_lat035_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta065_lat035_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta075_lat015_steps25",
+      "beta": 75.0,
+      "latency_threshold": 15.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta075_lat015_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta075_lat015_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta075_lat015_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta075_lat015_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta075_lat015_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta075_lat015_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta075_lat015_steps40",
+      "beta": 75.0,
+      "latency_threshold": 15.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta075_lat015_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta075_lat015_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta075_lat015_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta075_lat015_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta075_lat015_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta075_lat015_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta075_lat015_steps60",
+      "beta": 75.0,
+      "latency_threshold": 15.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta075_lat015_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta075_lat015_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta075_lat015_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta075_lat015_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta075_lat015_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta075_lat015_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta075_lat025_steps25",
+      "beta": 75.0,
+      "latency_threshold": 25.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta075_lat025_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta075_lat025_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta075_lat025_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta075_lat025_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta075_lat025_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta075_lat025_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta075_lat025_steps40",
+      "beta": 75.0,
+      "latency_threshold": 25.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta075_lat025_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta075_lat025_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta075_lat025_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta075_lat025_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta075_lat025_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta075_lat025_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta075_lat025_steps60",
+      "beta": 75.0,
+      "latency_threshold": 25.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta075_lat025_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta075_lat025_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta075_lat025_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta075_lat025_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta075_lat025_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta075_lat025_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta075_lat035_steps25",
+      "beta": 75.0,
+      "latency_threshold": 35.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta075_lat035_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta075_lat035_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta075_lat035_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta075_lat035_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta075_lat035_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta075_lat035_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta075_lat035_steps40",
+      "beta": 75.0,
+      "latency_threshold": 35.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta075_lat035_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta075_lat035_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta075_lat035_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta075_lat035_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta075_lat035_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta075_lat035_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta075_lat035_steps60",
+      "beta": 75.0,
+      "latency_threshold": 35.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta075_lat035_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta075_lat035_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta075_lat035_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta075_lat035_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta075_lat035_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta075_lat035_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta085_lat015_steps25",
+      "beta": 85.0,
+      "latency_threshold": 15.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta085_lat015_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta085_lat015_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta085_lat015_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta085_lat015_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta085_lat015_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta085_lat015_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta085_lat015_steps40",
+      "beta": 85.0,
+      "latency_threshold": 15.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta085_lat015_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta085_lat015_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta085_lat015_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta085_lat015_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta085_lat015_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta085_lat015_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta085_lat015_steps60",
+      "beta": 85.0,
+      "latency_threshold": 15.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta085_lat015_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta085_lat015_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta085_lat015_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta085_lat015_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta085_lat015_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta085_lat015_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta085_lat025_steps25",
+      "beta": 85.0,
+      "latency_threshold": 25.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta085_lat025_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta085_lat025_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta085_lat025_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta085_lat025_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta085_lat025_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta085_lat025_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta085_lat025_steps40",
+      "beta": 85.0,
+      "latency_threshold": 25.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta085_lat025_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta085_lat025_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta085_lat025_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta085_lat025_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta085_lat025_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta085_lat025_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta085_lat025_steps60",
+      "beta": 85.0,
+      "latency_threshold": 25.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta085_lat025_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta085_lat025_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta085_lat025_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta085_lat025_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta085_lat025_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta085_lat025_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta085_lat035_steps25",
+      "beta": 85.0,
+      "latency_threshold": 35.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta085_lat035_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta085_lat035_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta085_lat035_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta085_lat035_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta085_lat035_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta085_lat035_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta085_lat035_steps40",
+      "beta": 85.0,
+      "latency_threshold": 35.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta085_lat035_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta085_lat035_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta085_lat035_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta085_lat035_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta085_lat035_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta085_lat035_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta085_lat035_steps60",
+      "beta": 85.0,
+      "latency_threshold": 35.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta085_lat035_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta085_lat035_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta085_lat035_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta085_lat035_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta085_lat035_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta085_lat035_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta095_lat015_steps25",
+      "beta": 95.0,
+      "latency_threshold": 15.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta095_lat015_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta095_lat015_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta095_lat015_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta095_lat015_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta095_lat015_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta095_lat015_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta095_lat015_steps40",
+      "beta": 95.0,
+      "latency_threshold": 15.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta095_lat015_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta095_lat015_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta095_lat015_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta095_lat015_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta095_lat015_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta095_lat015_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta095_lat015_steps60",
+      "beta": 95.0,
+      "latency_threshold": 15.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta095_lat015_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta095_lat015_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta095_lat015_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta095_lat015_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta095_lat015_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta095_lat015_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta095_lat025_steps25",
+      "beta": 95.0,
+      "latency_threshold": 25.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta095_lat025_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta095_lat025_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta095_lat025_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta095_lat025_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta095_lat025_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta095_lat025_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta095_lat025_steps40",
+      "beta": 95.0,
+      "latency_threshold": 25.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta095_lat025_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta095_lat025_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta095_lat025_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta095_lat025_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta095_lat025_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta095_lat025_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta095_lat025_steps60",
+      "beta": 95.0,
+      "latency_threshold": 25.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta095_lat025_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta095_lat025_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta095_lat025_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta095_lat025_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta095_lat025_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta095_lat025_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta095_lat035_steps25",
+      "beta": 95.0,
+      "latency_threshold": 35.0,
+      "num_steps": 25,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta095_lat035_steps25/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta095_lat035_steps25/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta095_lat035_steps25/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta095_lat035_steps25/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta095_lat035_steps25/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta095_lat035_steps25/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta095_lat035_steps40",
+      "beta": 95.0,
+      "latency_threshold": 35.0,
+      "num_steps": 40,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta095_lat035_steps40/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta095_lat035_steps40/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta095_lat035_steps40/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta095_lat035_steps40/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta095_lat035_steps40/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta095_lat035_steps40/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    },
+    {
+      "model_id": "beta095_lat035_steps60",
+      "beta": 95.0,
+      "latency_threshold": 35.0,
+      "num_steps": 60,
+      "neuron_threshold": 1.0,
+      "learning_rate": null,
+      "summary_path": "data/traces/beta095_lat035_steps60/summary.json",
+      "sample_count": 5,
+      "correct_count": 5,
+      "wrong_count": 0,
+      "samples": [
+        {
+          "sample_idx": 0,
+          "true_label": 7,
+          "pred_label": 7,
+          "correct": true,
+          "filename": "sample_0000_label_7_pred_7.json",
+          "path": "data/traces/beta095_lat035_steps60/sample_0000_label_7_pred_7.json"
+        },
+        {
+          "sample_idx": 1,
+          "true_label": 2,
+          "pred_label": 2,
+          "correct": true,
+          "filename": "sample_0001_label_2_pred_2.json",
+          "path": "data/traces/beta095_lat035_steps60/sample_0001_label_2_pred_2.json"
+        },
+        {
+          "sample_idx": 2,
+          "true_label": 1,
+          "pred_label": 1,
+          "correct": true,
+          "filename": "sample_0002_label_1_pred_1.json",
+          "path": "data/traces/beta095_lat035_steps60/sample_0002_label_1_pred_1.json"
+        },
+        {
+          "sample_idx": 3,
+          "true_label": 0,
+          "pred_label": 0,
+          "correct": true,
+          "filename": "sample_0003_label_0_pred_0.json",
+          "path": "data/traces/beta095_lat035_steps60/sample_0003_label_0_pred_0.json"
+        },
+        {
+          "sample_idx": 4,
+          "true_label": 4,
+          "pred_label": 4,
+          "correct": true,
+          "filename": "sample_0004_label_4_pred_4.json",
+          "path": "data/traces/beta095_lat035_steps60/sample_0004_label_4_pred_4.json"
+        }
+      ]
+    }
+  ],
+  "total_variants": 36,
+  "total_samples": 180
+}
