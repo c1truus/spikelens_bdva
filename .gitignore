@@ -10,9 +10,9 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
-# Training-only artifacts
-data/
-spikelens_models/
+# Training-only artifacts at repo root
+/data/
+/spikelens_models/
 *.pt
 *.pth
 *.ckpt
